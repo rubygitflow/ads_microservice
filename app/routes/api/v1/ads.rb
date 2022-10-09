@@ -7,18 +7,22 @@ class AdsMicroservice
 
   PAGE_FIRST = 1
 
-  hash_path("/api/v1/ads") do |r|
+  hash_path('/api/v1/ads') do |r|
     r.is do
       r.get do
         # https://stackoverflow.com/questions/16937731/sinatra-kaminari-pagination-problems-with-sequel-and-postgres
-        page = Integer(r.params[:page]) rescue PAGE_FIRST
+        page = begin
+          Integer(r.params[:page])
+        rescue StandardError
+          PAGE_FIRST
+        end
         # https://sequel.jeremyevans.net/rdoc/classes/Sequel/Dataset.html
         ads = Ad.order(Sequel.desc(:updated_at))
-          .select(:title, :description, :city, :user_id, :lat, :lon)
-          .paginate(page.to_i, Settings.pagination.page_size)
+                .select(:title, :description, :city, :user_id, :lat, :lon)
+                .paginate(page.to_i, Settings.pagination.page_size)
 
-        {data: ads.all, links: pagination_links(ads)}
-     end
+        { data: ads.all, links: pagination_links(ads) }
+      end
 
       r.post do
         ad_params = validate_with!(::AdParamsContract)
@@ -26,7 +30,7 @@ class AdsMicroservice
         error = ad_params.errors.to_hash
         if error.present?
           #  the 3-d Dry::Validation's catch
-          @dry_validation_response = error 
+          @dry_validation_response = error
           raise NameError
         end
 
@@ -36,7 +40,7 @@ class AdsMicroservice
 
         if result.success?
           response.status = 201
-          {data: result.ad}
+          { data: result.ad }
         else
           response.status = 422
           error_response(result.ad)

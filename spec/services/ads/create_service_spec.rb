@@ -17,7 +17,7 @@ RSpec.describe Ads::CreateService do
 
     it 'creates a new ad' do
       expect { ad.call(ad: ad_params) }
-        .to change { Ad.count }.from(0).to(1)
+        .to change(Ad, :count).from(0).to(1)
     end
 
     it 'assigns ad' do
@@ -39,7 +39,7 @@ RSpec.describe Ads::CreateService do
 
     it 'does not create ad' do
       expect { ad.call(ad: ad_params) }
-        .not_to change { Ad.count }
+        .not_to change(Ad, :count)
     end
 
     it 'assigns ad' do

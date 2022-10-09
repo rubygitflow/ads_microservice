@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dry/validation"
+require 'dry/validation'
 
 class AdParamsContract < Dry::Validation::Contract
   params do

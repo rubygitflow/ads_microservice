@@ -76,11 +76,11 @@ RSpec.describe AdsMicroservice, type: :routes do
 
       it 'creates a new ad' do
         expect { post '/api/v1/ads', ad: ad_params }
-          .to change { Ad.count }.from(0).to(1)
+          .to change(Ad, :count).from(0).to(1)
       end
 
       it 'has status 201' do
-      	post '/api/v1/ads', ad: ad_params
+        post '/api/v1/ads', ad: ad_params
 
         expect(last_response.status).to eq(201)
       end
@@ -90,7 +90,7 @@ RSpec.describe AdsMicroservice, type: :routes do
 
         expect(response_body['data']).to a_hash_including(
           'id' => last_ad.id,
-          "city" => "City"
+          'city' => 'City'
         )
       end
     end
