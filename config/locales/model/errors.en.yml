@@ -1,3 +1,10 @@
 en:
   model:
     errors:
+      ad:
+        title:
+          blank: 'Add a title'
+        description:
+          blank: 'Add a description'
+        city:
+          blank: 'Add a city'

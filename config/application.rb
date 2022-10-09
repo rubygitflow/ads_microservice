@@ -49,7 +49,7 @@ class AdsMicroservice < Roda
     when NameError # Dry::Validation::Result  -  #  3-d catch
       response.status = 422
       key = @dry_validation_response.keys.first
-      value = I18n.t(:blank, scope: "model.errors.reference_book.#{key}", default: @dry_validation_response[key])
+      value = I18n.t(:blank, scope: "model.errors.ad.#{key}", default: @dry_validation_response[key])
       error_response({ key => value })
     else
       response.status = 500
