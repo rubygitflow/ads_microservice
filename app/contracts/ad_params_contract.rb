@@ -8,7 +8,6 @@ class AdParamsContract < Dry::Validation::Contract
       required(:title).value(:string)
       required(:description).value(:string)
       required(:city).value(:string)
-      required(:user_id).value(:integer)
     end
   end
 end

@@ -10,18 +10,17 @@ RSpec.describe Ads::CreateService do
       {
         title: 'Ad title',
         description: 'Ad description',
-        city: 'City',
-        user_id: user_id
+        city: 'City'
       }
     end
 
     it 'creates a new ad' do
-      expect { ad.call(ad: ad_params) }
+      expect { ad.call(ad: ad_params, user_id: user_id) }
         .to change(Ad, :count).from(0).to(1)
     end
 
     it 'assigns ad' do
-      result = ad.call(ad: ad_params)
+      result = ad.call(ad: ad_params, user_id: user_id)
 
       expect(result.ad).to be_kind_of(Ad)
     end
@@ -32,18 +31,17 @@ RSpec.describe Ads::CreateService do
       {
         title: 'Ad title',
         description: 'Ad description',
-        city: '',
-        user_id: user_id
+        city: ''
       }
     end
 
     it 'does not create ad' do
-      expect { ad.call(ad: ad_params) }
+      expect { ad.call(ad: ad_params, user_id: user_id) }
         .not_to change(Ad, :count)
     end
 
     it 'assigns ad' do
-      result = ad.call(ad: ad_params)
+      result = ad.call(ad: ad_params, user_id: user_id)
 
       expect(result.ad).to be_kind_of(Ad)
     end

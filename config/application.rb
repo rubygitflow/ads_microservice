@@ -46,11 +46,14 @@ class AdsMicroservice < Roda
     when KeyError
       response.status = 422
       error_response e.message, meta: { 'meta' => I18n.t(:missing_parameters, scope: 'api.errors') }
-    when NameError # Dry::Validation::Result  -  #  3-d catch
+    when NameError # Dry::Validation::Result
       response.status = 422
       key = @dry_validation_response.keys.first
       value = I18n.t(:blank, scope: "model.errors.ad.#{key}", default: @dry_validation_response[key])
       error_response({ key => value })
+    when Auth::Unauthorized
+      response.status = 403
+      error_response I18n.t(:unauthorized, scope: 'api.errors')
     else
       response.status = 500
       error_response e.message, meta: { 'meta' => e.class }

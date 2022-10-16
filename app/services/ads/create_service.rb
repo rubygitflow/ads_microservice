@@ -9,13 +9,15 @@ module Ads
       option :title,        proc(&:to_s)
       option :description,  proc(&:to_s)
       option :city,         proc(&:to_s)
-      option :user_id,      proc(&:to_i)
     end
+
+    option :user_id, proc(&:to_i)
 
     attr_reader :ad
 
     def call
       @ad = ::Ad.new(@ad.to_h)
+      @ad.user_id = @user_id
 
       if @ad.valid?
         @ad.save

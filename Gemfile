@@ -21,6 +21,9 @@ gem 'activesupport', require: false
 gem 'dry-initializer'
 gem 'dry-validation'
 
+gem 'faraday'
+gem 'faraday_middleware'
+
 group :development do
   gem 'pry'
 end

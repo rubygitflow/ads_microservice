@@ -4,6 +4,7 @@ class AdsMicroservice
   include PaginationLinks
   include Validations
   include ApiErrors
+  include Auth
 
   PAGE_FIRST = 1
 
@@ -35,7 +36,8 @@ class AdsMicroservice
         end
 
         result = Ads::CreateService.call(
-          ad: ad_params[:ad]
+          ad: ad_params[:ad],
+          user_id: user_id
         )
 
         if result.success?
