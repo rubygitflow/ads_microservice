@@ -13,11 +13,18 @@ module Ads
 
     option :user_id, proc(&:to_i)
 
+    option :geocodes, {} do
+      option :lat,          proc(&:to_s)
+      option :lon,          proc(&:to_s)
+    end
+
     attr_reader :ad
 
     def call
       @ad = ::Ad.new(@ad.to_h)
       @ad.user_id = @user_id
+      @ad.lat = @geocodes.to_h.fetch('lat')
+      @ad.lon = @geocodes.to_h.fetch('lon')
 
       if @ad.valid?
         @ad.save

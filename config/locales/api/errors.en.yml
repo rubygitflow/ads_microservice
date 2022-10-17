@@ -5,3 +5,4 @@ en:
       not_unique: 'This resource already exists'
       missing_parameters: 'The request is missing required parameters'
       unauthorized: 'Access to the resource is limited'
+      missing_attributes: 'Invalid city name'

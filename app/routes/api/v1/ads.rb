@@ -5,6 +5,7 @@ class AdsMicroservice
   include Validations
   include ApiErrors
   include Auth
+  include Geocoder
 
   PAGE_FIRST = 1
 
@@ -30,7 +31,8 @@ class AdsMicroservice
 
         result = Ads::CreateService.call(
           ad: ad_params[:ad],
-          user_id: user_id
+          user_id: user_id,
+          geocodes: geocodes
         )
 
         if result.success?

@@ -4,6 +4,9 @@ require:
 RSpec/ExampleLength:
   Max: 15
 
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
 Layout/ArrayAlignment:
   Exclude:
     - db/seeds.rb

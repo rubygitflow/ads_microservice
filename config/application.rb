@@ -7,8 +7,6 @@ class AdsMicroservice < Roda
   Unreloader.require 'app/helpers'
   Unreloader.require 'app/serializers'
 
-  include ::ApiErrors
-
   def self.root
     ApplicationLoader.root
   end
