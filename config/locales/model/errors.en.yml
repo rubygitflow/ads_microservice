@@ -2,6 +2,7 @@ en:
   model:
     errors:
       ad:
+        blank: 'Add an advert' 
         title:
           blank: 'Add a title'
         description:

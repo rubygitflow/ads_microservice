@@ -28,13 +28,6 @@ class AdsMicroservice
       r.post do
         ad_params = validate_with!(::AdParamsContract)
 
-        error = ad_params.errors.to_hash
-        if error.present?
-          #  the 3-d Dry::Validation's catch
-          @dry_validation_response = error
-          raise NameError
-        end
-
         result = Ads::CreateService.call(
           ad: ad_params[:ad],
           user_id: user_id

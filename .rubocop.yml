@@ -2,7 +2,7 @@ require:
   - rubocop-rspec
 
 RSpec/ExampleLength:
-  Max: 10
+  Max: 15
 
 Layout/ArrayAlignment:
   Exclude:

@@ -48,7 +48,7 @@ Use the URL port setting in `config/puma.rb` to manage multiple microservices in
 $ curl --url "http://localhost:3001" -v
 $ http :3001
 $ http -f post ":3001/api/v1/ads" "ad[title]=advertisement" "ad[city]=Moscow" "ad[description]=Good suggestion" "Authorization:Bearer some_user_token"
-$ http -f get ":3001/api/v1/ads" "Authorization:Bearer some_user_token"
+$ http -f get ":3001/api/v1/ads"
 ```
 ## Run tests
 ```bash

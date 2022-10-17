@@ -62,13 +62,17 @@ RSpec.describe AdsMicroservice, type: :routes do
       it 'returns an error' do
         post '/api/v1/ads', ad: ad_params
 
-        expect(response_body['errors']).to include(
-          {
-            'detail' => 'Add a city',
-            'source' => {
-              'pointer' => '/data/attributes/city'
+        expect(response_body['errors']).to eq(
+          [
+            {
+              'detail' => {
+                'city' => ['Add a city']
+              },
+              'source' => {
+                'pointer' => '/data/attributes/ad'
+              }
             }
-          }
+          ]
         )
       end
     end
