@@ -24,6 +24,8 @@ gem 'dry-validation'
 gem 'faraday'
 gem 'faraday_middleware'
 
+gem 'bunny'
+
 group :development do
   gem 'pry'
 end

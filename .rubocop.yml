@@ -37,3 +37,6 @@ Metrics/BlockLength:
   Exclude:
     - Rakefile
     - app/routes/**/*
+
+Naming/MethodParameterName:
+  Enabled: false

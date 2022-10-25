@@ -5,7 +5,6 @@ class AdsMicroservice
   include Validations
   include ApiErrors
   include Auth
-  include Geocoder
 
   PAGE_FIRST = 1
 
@@ -23,6 +22,10 @@ class AdsMicroservice
                 .select(:title, :description, :city, :user_id, :lat, :lon)
                 .paginate(page.to_i, Settings.pagination.page_size)
 
+        # for test the separate channels
+        # RabbitMq.channel
+        # sleep 10
+
         { data: ads.all, links: pagination_links(ads) }
       end
 
@@ -31,8 +34,7 @@ class AdsMicroservice
 
         result = Ads::CreateService.call(
           ad: ad_params[:ad],
-          user_id: user_id,
-          geocodes: geocodes
+          user_id: user_id
         )
 
         if result.success?

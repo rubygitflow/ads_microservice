@@ -4,3 +4,5 @@ db:
   shared_buffers: 512MB
 pagination:
   page_size: 20
+rabbitmq:
+  consumer_pool: 10

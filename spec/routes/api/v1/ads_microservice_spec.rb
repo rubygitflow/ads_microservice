@@ -26,8 +26,8 @@ RSpec.describe AdsMicroservice, type: :routes do
     let(:auth_token) { 'auth.token' }
     let(:auth_service) { instance_double('Auth service') }
     let(:coords) { { 'lat' => 1.1, 'lon' => 2.2 } }
-    let(:city_param) { 'City' }
     let(:geocoder_service) { instance_double('Geocoder service') }
+    let(:ad) { create(:ad) }
 
     before do
       allow(auth_service).to receive(:auth)
@@ -38,11 +38,8 @@ RSpec.describe AdsMicroservice, type: :routes do
 
       header 'Authorization', "Bearer #{auth_token}"
 
-      allow(geocoder_service).to receive(:geocodes)
-        .with(city_param)
-        .and_return(coords)
-
-      allow(GeocoderService::Geocoder).to receive(:new).and_return(geocoder_service)
+      allow(geocoder_service).to receive(:geocode_later)
+        .with(ad)
     end
 
     context 'with missing parameters' do
@@ -123,7 +120,7 @@ RSpec.describe AdsMicroservice, type: :routes do
 
       it 'creates a new ad' do
         expect { post '/api/v1/ads', ad: ad_params }
-          .to change(Ad, :count).from(0).to(1)
+          .to change(Ad, :count).from(1).to(2)
       end
 
       it 'has status 201' do
