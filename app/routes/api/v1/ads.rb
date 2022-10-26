@@ -22,10 +22,6 @@ class AdsMicroservice
                 .select(:title, :description, :city, :user_id, :lat, :lon)
                 .paginate(page.to_i, Settings.pagination.page_size)
 
-        # for test the separate channels
-        # RabbitMq.channel
-        # sleep 10
-
         { data: ads.all, links: pagination_links(ads) }
       end
 
