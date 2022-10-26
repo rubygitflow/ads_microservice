@@ -41,6 +41,23 @@ class AdsMicroservice
           error_response(result.ad)
         end
       end
+
+      r.patch do
+        input = JSON.parse(r.body.read)
+        id = input['id']
+        lat = input['coordinates']['lat']
+        lon = input['coordinates']['lon']
+
+        result = Ads::UpdateService.call(id, lat: lat, lon: lon)
+
+        if result.success?
+          response.status = 201
+          { data: result.ad }
+        else
+          response.status = 422
+          error_response(result.ad)
+        end
+      end
     end
   end
 end

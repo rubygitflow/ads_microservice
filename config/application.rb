@@ -16,6 +16,7 @@ class AdsMicroservice < Roda
   plugin :hash_routes
   plugin :typecast_params
   plugin :json
+  plugin :all_verbs
 
   plugin :default_headers,
          # 'Strict-Transport-Security'=>'max-age=16070400;', # Uncomment if only allowing https:// access
