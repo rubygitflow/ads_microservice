@@ -3,10 +3,8 @@
 module Geocoder
   include ApiErrors
 
-  CITY_PARAM = /\A(?<city>.+)\z/.freeze
-
   def geocodes
-    geocodes = geocoder_service.geocodes(matched_param)
+    geocodes = geocoder_service.geocodes(geocoder_param)
     raise AttributeError if geocodes.blank?
 
     geocodes
@@ -16,13 +14,6 @@ module Geocoder
 
   def geocoder_service
     @geocoder_service ||= GeocoderService::Geocoder.new
-  end
-
-  def matched_param
-    result = geocoder_param&.match(CITY_PARAM)
-    return if result.blank?
-
-    result[:city]
   end
 
   def geocoder_param
