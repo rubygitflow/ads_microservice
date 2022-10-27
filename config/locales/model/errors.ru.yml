@@ -2,6 +2,7 @@ ru:
   model:
     errors:
       ad:
+        blank: 'Добавьте объявление' 
         title:
           blank: 'Укажите название'
         description:

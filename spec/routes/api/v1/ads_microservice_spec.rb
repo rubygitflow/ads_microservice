@@ -23,6 +23,27 @@ RSpec.describe AdsMicroservice, type: :routes do
 
   describe 'POST /api/v1/ads' do
     let(:user_id) { 101 }
+    let(:auth_token) { 'auth.token' }
+    let(:auth_service) { instance_double('Auth service') }
+    let(:coords) { { 'lat' => 1.1, 'lon' => 2.2 } }
+    let(:city_param) { 'City' }
+    let(:geocoder_service) { instance_double('Geocoder service') }
+
+    before do
+      allow(auth_service).to receive(:auth)
+        .with(auth_token)
+        .and_return(user_id)
+
+      allow(AuthService::Client).to receive(:new).and_return(auth_service)
+
+      header 'Authorization', "Bearer #{auth_token}"
+
+      allow(geocoder_service).to receive(:geocodes)
+        .with(city_param)
+        .and_return(coords)
+
+      allow(GeocoderService::Geocoder).to receive(:new).and_return(geocoder_service)
+    end
 
     context 'with missing parameters' do
       it 'returns an error' do
@@ -37,8 +58,7 @@ RSpec.describe AdsMicroservice, type: :routes do
         {
           title: 'Ad title',
           description: 'Ad description',
-          city: '',
-          user_id: user_id
+          city: ''
         }
       end
 
@@ -51,14 +71,42 @@ RSpec.describe AdsMicroservice, type: :routes do
       it 'returns an error' do
         post '/api/v1/ads', ad: ad_params
 
-        expect(response_body['errors']).to include(
-          {
-            'detail' => 'Add a city',
-            'source' => {
-              'pointer' => '/data/attributes/city'
+        expect(response_body['errors']).to eq(
+          [
+            {
+              'detail' => {
+                'city' => ['Add a city']
+              },
+              'source' => {
+                'pointer' => '/data/attributes/ad'
+              }
             }
-          }
+          ]
         )
+      end
+    end
+
+    context 'with missing user_id' do
+      let(:user_id) { nil }
+
+      let(:ad_params) do
+        {
+          title: 'Ad title',
+          description: 'Ad description',
+          city: 'City'
+        }
+      end
+
+      it 'has status 403' do
+        post '/api/v1/ads', ad: ad_params
+
+        expect(last_response.status).to eq(403)
+      end
+
+      it 'returns an error' do
+        post '/api/v1/ads', ad: ad_params
+
+        expect(response_body['errors']).to include('detail' => 'Access to the resource is limited')
       end
     end
 
@@ -67,8 +115,7 @@ RSpec.describe AdsMicroservice, type: :routes do
         {
           title: 'Ad title',
           description: 'Ad description',
-          city: 'City',
-          user_id: user_id
+          city: 'City'
         }
       end
 

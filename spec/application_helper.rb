@@ -12,4 +12,5 @@ Dir[AdsMicroservice.root.concat('/spec/support/**/*.rb')].sort.each { |f| requir
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.include RouteHelpers, type: :routes
+  config.include ClientHelpers, type: :client
 end

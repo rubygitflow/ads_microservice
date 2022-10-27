@@ -20,10 +20,11 @@ module ErrorSerializer
   private
 
   def build_hash_error(message)
-    key = message.keys.first
-    error = { detail: message[key] }
-    error[:source] = { pointer: "/data/attributes/#{key}" }
-    error
+    message.to_a.each_with_object([]) do |item, res|
+      error = { detail: item[1] }
+      error[:source] = { pointer: "/data/attributes/#{item[0]}" }
+      res << error
+    end
   end
 
   def build_errors(error_messages, meta)

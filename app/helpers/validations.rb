@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module Validations
-  # class InvalidParams < StandardError; end
+  include ApiErrors
 
   def validate_with!(validation)
-    validate_with(validation)
-    # https://www.rubydoc.info/gems/roda/Roda/RodaPlugins/TypecastParams
-    #  the 2-nd Dry::Validation's catch
-    # raise Roda::RodaPlugins::TypecastParams::Error if result.failure?
+    result = validate_with(validation)
+    raise MissingParams, result.errors.to_hash if result.errors.present?
+
+    result
   end
 
   def validate_with(validation)

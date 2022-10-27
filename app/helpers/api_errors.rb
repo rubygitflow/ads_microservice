@@ -11,4 +11,26 @@ module ApiErrors
       ErrorSerializer.from_messages(error_messages, meta: meta)
     end
   end
+
+  class MissingParams < StandardError
+    attr_reader :errors
+
+    def initialize(error = {})
+      @errors = error
+      message = I18n.t(:missing_parameters, scope: 'api.errors')
+
+      super(message)
+    end
+  end
+
+  class AttributeError < StandardError
+    attr_reader :errors
+
+    def initialize(error = {})
+      @errors = error
+      message = I18n.t(:missing_attributes, scope: 'api.errors')
+
+      super(message)
+    end
+  end
 end
