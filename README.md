@@ -41,13 +41,17 @@ $ psql -c "alter user app_ads with password 'mypassword'"
 ```
 Configure the database connection defined in .env.rb for the ENV parameter `ENV['APP_ADS_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
 ```ruby
+ENV['APP_PORT'] = '3001'
+ENV['AUTH_URL'] = 'http://localhost:3000/api/v1'
+ENV['GEOCODER_URL'] = 'http://localhost:3002/'
+
 case ENV['RACK_ENV'] ||= 'development'
 when 'test'
-  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"
+  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"
 when 'production'
-  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_production"
+  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_production"
 else
-  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_development"
+  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_development"
 end
 ```
 According to the [Sequel documentation](https://github.com/jeremyevans/sequel#connecting-to-a-database-), you can also specify optional parameters `Settings.db` in `config/settings/*.yml` and `config/settings.yml` or `config/settings.local.yml`
