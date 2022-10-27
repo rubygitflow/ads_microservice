@@ -42,11 +42,11 @@ Configure the database connection defined in .env.rb for the ENV parameter `ENV[
 ```ruby
 case ENV['RACK_ENV'] ||= 'development'
 when 'test'
-  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"
+  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"
 when 'production'
-  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_production"
+  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_production"
 else
-  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_development"
+  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_development"
 end
 ```
 According to the [Sequel documentation](https://github.com/jeremyevans/sequel#connecting-to-a-database-), you can also specify optional parameters `Settings.db` in `config/settings/*.yml` and `config/settings.yml` or `config/settings.local.yml`
