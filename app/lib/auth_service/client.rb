@@ -50,7 +50,10 @@ module AuthService
         payload,
         routing_key: QUEUE_NAME,
         correlation_id: correlation_id,
-        reply_to: reply_queue.name
+        reply_to: reply_queue.name,
+        headers: {
+          request_id: Thread.current[:request_id]
+        }
       )
       lock.synchronize { condition.wait(lock) }
       connection.close

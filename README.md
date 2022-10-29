@@ -1,4 +1,4 @@
-# Ads Microservice (synchronous RabbitMQ)
+# Ads Microservice (on RabbitMQ)
 Ads microservice from Ruby Microservices course. You can look at the same microservice written strictly in [Roda conventions](https://github.com/rubygitflow/ads_microservice_rc).
 
 ## Download this app from the repository

@@ -47,3 +47,7 @@ Style/ClassVars:
 Style/FrozenStringLiteralComment:
   Exclude:
     - .env.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - app/lib/auth_service/client.rb
