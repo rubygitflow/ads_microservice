@@ -3,12 +3,22 @@
 require 'json'
 
 class AdsMicroservice < Roda
+  @@logger = nil
+
   # https://github.com/jeremyevans/rack-unreloader#classes-split-into-multiple-files-
   Unreloader.require 'app/helpers'
   Unreloader.require 'app/serializers'
 
   def self.root
-    ApplicationLoader.root
+    @root ||= ApplicationLoader.root
+  end
+
+  def logger
+    @@logger
+  end
+
+  def self.logger
+    @@logger
   end
 
   # https://roda.jeremyevans.net/documentation.html
@@ -17,6 +27,10 @@ class AdsMicroservice < Roda
   plugin :typecast_params
   plugin :json
   plugin :all_verbs
+
+  # https://roda.jeremyevans.net/rdoc/classes/Roda/RodaPlugins/CommonLogger.html
+  plugin :common_logger,
+         @@logger
 
   plugin :default_headers,
          # 'Strict-Transport-Security'=>'max-age=16070400;', # Uncomment if only allowing https:// access

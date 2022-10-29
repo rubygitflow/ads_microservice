@@ -1,4 +1,5 @@
 /config/settings.local.yml
+/config/settings/*.local.yml
 
 # Used instead of dotenv library to load environment variables.
 /.env.rb
@@ -8,3 +9,4 @@
 /Gemfile.lock
 
 /log
+!/log/.keep

@@ -1,2 +1,5 @@
 db:
   max_connections: 100
+logger:
+  path: log/production.log
+  level: <%= Logger::INFO %>

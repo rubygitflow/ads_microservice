@@ -51,6 +51,11 @@ class AdsMicroservice
         result = Ads::UpdateService.call(id, lat: lat, lon: lon)
 
         if result.success?
+          @@logger.info(
+            'Update city coordinates',
+            city: result.ad.city,
+            coordinates: [result.ad.lat, result.ad.lon]
+          )
           response.status = 201
           { data: result.ad }
         else

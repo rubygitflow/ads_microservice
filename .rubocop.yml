@@ -40,3 +40,6 @@ Metrics/BlockLength:
 
 Naming/MethodParameterName:
   Enabled: false
+
+Style/ClassVars:
+  Enabled: false

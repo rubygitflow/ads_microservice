@@ -1,2 +1,5 @@
 db:
   max_connections: 1
+logger:
+  path: log/test.log
+  level: <%= Logger::FATAL %>
