@@ -30,7 +30,7 @@ class AdsMicroservice
       response.status = 422
       error_response(e.errors)
     else
-      @@logger.fatal(
+      logger.fatal(
         'Unknown fatal error',
         error: e.message,
         class: e.class.name,

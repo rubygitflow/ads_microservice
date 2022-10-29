@@ -3,23 +3,21 @@
 require 'json'
 
 class AdsMicroservice < Roda
-  @@logger = nil
+  class << self
+    attr_accessor :logger
+
+    def root
+      ApplicationLoader.root
+    end
+  end
+
+  def logger
+    AdsMicroservice.logger
+  end
 
   # https://github.com/jeremyevans/rack-unreloader#classes-split-into-multiple-files-
   Unreloader.require 'app/helpers'
   Unreloader.require 'app/serializers'
-
-  def self.root
-    @root ||= ApplicationLoader.root
-  end
-
-  def logger
-    @@logger
-  end
-
-  def self.logger
-    @@logger
-  end
 
   # https://roda.jeremyevans.net/documentation.html
   plugin :environments

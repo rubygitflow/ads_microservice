@@ -43,3 +43,7 @@ Naming/MethodParameterName:
 
 Style/ClassVars:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - .env.rb

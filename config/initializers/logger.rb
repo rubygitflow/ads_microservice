@@ -19,7 +19,7 @@ AdsMicroservice.configure do |app|
     data[:request_id] ||= Thread.current[:request_id]
   end
 
-  app.class_variable_set :@@logger, logger
+  app.logger = logger
 end
 
 Sequel::Model.db.loggers.push(AdsMicroservice.logger)
