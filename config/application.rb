@@ -28,10 +28,6 @@ class AdsMicroservice < Roda
   plugin :json
   plugin :all_verbs
 
-  # https://roda.jeremyevans.net/rdoc/classes/Roda/RodaPlugins/CommonLogger.html
-  plugin :common_logger,
-         @@logger
-
   plugin :default_headers,
          # 'Strict-Transport-Security'=>'max-age=16070400;', # Uncomment if only allowing https:// access
          'Content-Type' => 'application/json'
