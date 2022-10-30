@@ -4,7 +4,8 @@ require_relative '../application'
 
 dev = ENV['RACK_ENV'] == 'development'
 
-logger_path = dev ? $stdout : "#{AdsMicroservice.root}/#{Settings.logger.path}"
+#             dev ? $stdout : 
+logger_path = "#{AdsMicroservice.root}/#{Settings.logger.path}"
 
 AdsMicroservice.configure do |app|
   logger = Ougai::Logger.new(
