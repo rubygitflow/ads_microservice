@@ -63,8 +63,8 @@ $ bin/console
 ```
 or run the application with modified configuration using environment variables as well
 ```bash
-$ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/puma
-$ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/console
+$ ENV__PAGINATION__PAGE_SIZE=100 LOG_SERVICE=stdout bin/puma
+$ RACK_ENV=test bin/console
 ```
 ## HTTP-requests to the app
 Use the URL port setting in `config/puma.rb` to manage multiple microservices in the same environment.
