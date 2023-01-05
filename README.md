@@ -38,8 +38,11 @@ Create password for user account via:
 $ sudo su - postgres
 $ psql -c "alter user app_ads with password 'mypassword'"
 ```
-Configure the database connection defined in .env.rb for the ENV parameter `ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
+Configure the RabbitMQ connection and the database connection in .env.rb for the ENV parameter `ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
 ```ruby
+ENV['RABBITMQ_HOST']='127.0.0.1'
+ENV['RABBITMQ_USER']='RabbitMQ_UserName'
+ENV['RABBITMQ_PASSWORD']='RabbitMQ_Password'
 case ENV['RACK_ENV'] ||= 'development'
 when 'test'
   ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"

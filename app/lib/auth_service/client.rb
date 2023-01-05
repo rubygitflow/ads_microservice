@@ -25,7 +25,11 @@ module AuthService
     private
 
     def create_connection
-      connection = Bunny.new(automatically_recover: false)
+      connection = Bunny.new(
+        host: Settings.rabbitmq.host,
+        username: Settings.rabbitmq.username,
+        password: Settings.rabbitmq.password
+      )
       connection.start
     end
 
