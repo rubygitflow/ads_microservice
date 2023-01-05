@@ -1,3 +1,5 @@
+app:
+  name: ads
 db:
   pool: 10
   timeout: 10000

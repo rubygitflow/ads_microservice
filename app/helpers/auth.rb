@@ -9,6 +9,11 @@ module Auth
     user_id = auth_service.auth(matched_token)
     raise Unauthorized if user_id.blank?
 
+    AdsMicroservice.logger.info(
+      'Request a user ID',
+      user: user_id
+    )
+
     user_id
   end
 

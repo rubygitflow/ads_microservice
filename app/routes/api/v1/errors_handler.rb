@@ -30,9 +30,13 @@ class AdsMicroservice
       response.status = 422
       error_response(e.errors)
     else
+      logger.fatal(
+        'Unknown fatal error',
+        error: e.message,
+        class: e.class.name,
+        trace: e.backtrace
+      )
       response.status = 500
-      # Debuger
-      puts "[#{Time.now}] #{e.inspect}\n#{e.backtrace&.join("\n")}"
       error_response e.message, meta: { 'meta' => e.class }
     end
   end

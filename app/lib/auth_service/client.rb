@@ -25,15 +25,20 @@ module AuthService
     private
 
     def create_connection
-      connection = Bunny.new(automatically_recover: false)
+      @connection ||= Bunny.new(
+        host: Settings.rabbitmq.host,
+        username: Settings.rabbitmq.username,
+        password: Settings.rabbitmq.password
+      )
       connection.start
+      @connection
     end
 
     def create_reply_queue
       that = self
-      @channel = connection.create_channel
-      reply_queue = channel.queue('', exclusive: true)
-      reply_queue.subscribe do |_delivery_info, properties, payload|
+      @channel ||= @connection.create_channel
+      @reply_queue ||= channel.queue('', exclusive: true)
+      @reply_queue.subscribe do |_delivery_info, properties, payload|
         if properties[:correlation_id] == that.correlation_id
           that.response = payload.to_i
 
@@ -45,14 +50,19 @@ module AuthService
     end
 
     def publish(payload)
-      @exchange = channel.default_exchange
-      exchange.publish(
+      @exchange = @channel.default_exchange
+      @exchange.publish(
         payload,
         routing_key: QUEUE_NAME,
         correlation_id: correlation_id,
-        reply_to: reply_queue.name
+        reply_to: @reply_queue.name,
+        headers: {
+          request_id: Thread.current[:request_id]
+        }
       )
       lock.synchronize { condition.wait(lock) }
+      reply_queue.delete
+      channel.close
       connection.close
       response
     end

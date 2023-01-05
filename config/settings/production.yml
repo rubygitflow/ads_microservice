@@ -1,2 +1,9 @@
 db:
   max_connections: 100
+logger:
+  path: log/production.log
+  level: <%= Logger::INFO %>
+rabbitmq:
+  host: <%= ENV.fetch('RABBITMQ_HOST') %>
+  username: <%= ENV.fetch('RABBITMQ_USER') %>
+  password: <%= ENV.fetch('RABBITMQ_PASSWORD') %>

@@ -1,4 +1,4 @@
-# Ads Microservice (synchronous RabbitMQ)
+# Ads Microservice (on RabbitMQ)
 Ads microservice from Ruby Microservices course. You can look at the same microservice written strictly in [Roda conventions](https://github.com/rubygitflow/ads_microservice_rc).
 
 ## Download this app from the repository
@@ -38,15 +38,18 @@ Create password for user account via:
 $ sudo su - postgres
 $ psql -c "alter user app_ads with password 'mypassword'"
 ```
-Configure the database connection defined in .env.rb for the ENV parameter `ENV['APP_ADS_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
+Configure the RabbitMQ connection and the database connection in .env.rb for the ENV parameter `ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
 ```ruby
+ENV['RABBITMQ_HOST']='127.0.0.1'
+ENV['RABBITMQ_USER']='RabbitMQ_UserName'
+ENV['RABBITMQ_PASSWORD']='RabbitMQ_Password'
 case ENV['RACK_ENV'] ||= 'development'
 when 'test'
-  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"
+  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_test"
 when 'production'
-  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_production"
+  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_production"
 else
-  ENV['APP_ADS_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_development"
+  ENV['ADS_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_ads:mypassword@127.0.0.1:5432/ads_microservice_development"
 end
 ```
 According to the [Sequel documentation](https://github.com/jeremyevans/sequel#connecting-to-a-database-), you can also specify optional parameters `Settings.db` in `config/settings/*.yml` and `config/settings.yml` or `config/settings.local.yml`
@@ -63,8 +66,8 @@ $ bin/console
 ```
 or run the application with modified configuration using environment variables as well
 ```bash
-$ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/puma
-$ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/console
+$ ENV__PAGINATION__PAGE_SIZE=100 LOG_SERVICE=stdout bin/puma
+$ RACK_ENV=test bin/console
 ```
 ## HTTP-requests to the app
 Use the URL port setting in `config/puma.rb` to manage multiple microservices in the same environment.

@@ -40,3 +40,14 @@ Metrics/BlockLength:
 
 Naming/MethodParameterName:
   Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - .env.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - app/lib/auth_service/client.rb

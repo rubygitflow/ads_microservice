@@ -2,6 +2,9 @@
 
 require_relative 'config/environment'
 
+use Rack::RequestId
+use Rack::Ougai::LogRequests, AdsMicroservice.logger # logs every request with timing data, request result, etc.
+
 dev = ENV['RACK_ENV'] == 'development'
 
 run(dev ? Unreloader : AdsMicroservice.freeze.app)
