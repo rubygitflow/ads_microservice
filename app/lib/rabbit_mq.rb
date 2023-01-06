@@ -7,7 +7,11 @@ module RabbitMq
 
   def connection
     @mutex.synchronize do
-      @connection ||= Bunny.new.start
+      @connection ||= Bunny.new(
+        host: ENV.fetch('RABBITMQ_HOST'),
+        username: ENV.fetch('RABBITMQ_USER'),
+        password: ENV.fetch('RABBITMQ_PASSWORD')
+      ).start
     end
   end
 

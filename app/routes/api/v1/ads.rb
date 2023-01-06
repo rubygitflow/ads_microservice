@@ -22,10 +22,6 @@ class AdsMicroservice
                 .select(:title, :description, :city, :user_id, :lat, :lon)
                 .paginate(page.to_i, Settings.pagination.page_size)
 
-        # for test the separate channels
-        # RabbitMq.channel
-        # sleep 10
-
         { data: ads.all, links: pagination_links(ads) }
       end
 
@@ -36,6 +32,23 @@ class AdsMicroservice
           ad: ad_params[:ad],
           user_id: user_id
         )
+
+        if result.success?
+          response.status = 201
+          { data: result.ad }
+        else
+          response.status = 422
+          error_response(result.ad)
+        end
+      end
+
+      r.patch do
+        input = JSON.parse(r.body.read)
+        id = input['id']
+        lat = input['coordinates']['lat']
+        lon = input['coordinates']['lon']
+
+        result = Ads::UpdateService.call(id, lat: lat, lon: lon)
 
         if result.success?
           response.status = 201
