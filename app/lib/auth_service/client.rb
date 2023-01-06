@@ -22,17 +22,24 @@ module AuthService
 
     attr_accessor :response, :channel, :exchange
 
+
     private
 
     def create_connection
-      connection = Bunny.new(automatically_recover: false)
-      connection.start
+      connection ||= Bunny.new(
+        host: ENV.fetch('RABBITMQ_HOST'),
+        username: ENV.fetch('RABBITMQ_USER'),
+        password: ENV.fetch('RABBITMQ_PASSWORD'),
+        automatically_recover: false
+      )
+      connection
     end
 
     def create_reply_queue
+      connection.start
       that = self
-      @channel = connection.create_channel
-      reply_queue = channel.queue('', exclusive: true)
+      @channel ||= connection.create_channel
+      reply_queue ||= channel.queue('', exclusive: true)
       reply_queue.subscribe do |_delivery_info, properties, payload|
         if properties[:correlation_id] == that.correlation_id
           that.response = payload.to_i
@@ -52,7 +59,9 @@ module AuthService
         correlation_id: correlation_id,
         reply_to: reply_queue.name
       )
+      p "before condition.wait(lock)"
       lock.synchronize { condition.wait(lock) }
+      p "after condition.wait(lock)"
       connection.close
       response
     end
