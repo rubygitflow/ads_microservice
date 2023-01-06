@@ -59,9 +59,7 @@ module AuthService
         correlation_id: correlation_id,
         reply_to: reply_queue.name
       )
-      p "before condition.wait(lock)"
       lock.synchronize { condition.wait(lock) }
-      p "after condition.wait(lock)"
       connection.close
       response
     end
