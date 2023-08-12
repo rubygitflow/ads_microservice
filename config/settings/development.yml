@@ -1,2 +1,5 @@
+fw:
+  logger_stdout: false
 db:
+  logger_stdout: false
   max_connections: 10

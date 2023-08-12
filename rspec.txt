@@ -1,0 +1,22 @@
+
+AdsMicroservice
+  GET /api/v1/ads
+[32m    returns a collection of ads[0m
+[32m    has status 200[0m
+  POST /api/v1/ads
+    with missing parameters
+[32m      returns an error[0m
+    with invalid parameters
+[32m      has status 422[0m
+[32m      returns an error[0m
+    with missing user_id
+[32m      has status 403[0m
+[32m      returns an error[0m
+    with valid parameters
+[32m      creates a new ad[0m
+[32m      has status 201[0m
+[32m      returns an ad[0m
+
+Finished in 0.04741 seconds (files took 1.07 seconds to load)
+[32m10 examples, 0 failures[0m
+

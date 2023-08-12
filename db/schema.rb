@@ -1,4 +1,4 @@
-# Version: 20221009091622
+# Version: 20230812233947
 Sequel.migration do
   change do
     create_table(:ads) do
@@ -13,16 +13,6 @@ Sequel.migration do
       column :updated_at, "timestamp with time zone", :null=>false
       
       index [:user_id]
-    end
-    
-    create_table(:reference_books) do
-      primary_key :id, :type=>:Bignum
-      column :volume, "character varying", :null=>false
-      column :description, "jsonb"
-      column :created_at, "timestamp(6) without time zone", :null=>false
-      column :updated_at, "timestamp(6) without time zone", :null=>false
-      
-      index [:description]
     end
     
     create_table(:schema_migrations) do
