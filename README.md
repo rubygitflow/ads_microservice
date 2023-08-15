@@ -47,18 +47,25 @@ $ psql -c "alter user app_ads with password 'mypassword'"
 
 <details>
 <summary>Alternative way</summary>
-- make sure you have a postgres db by entering the command
+
+  - make sure you have a postgres db by entering the command
+
 ```bash
 psql -l
 ```
+
 - log in to psql
+
 ```bash
 sudo psql -U app_ads -d postgres
 ```
+
 - input the command
+
 ```bash
 postgres=> alter user app_ads with password 'mypassword';
 ```
+
 </details>
 
 Configure the database connection defined in .env.rb for the ENV parameter `ENV['APP_ADS_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
