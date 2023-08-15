@@ -13,7 +13,7 @@ Bundler.require(:default, ENV['RACK_ENV'])
 
 dev = ENV['RACK_ENV'] == 'development'
 
-if dev
+if dev && ENV['LOGGER_STDOUT'] == 'true'
   require 'logger'
   logger = Logger.new($stdout)
 end

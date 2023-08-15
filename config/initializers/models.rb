@@ -22,7 +22,7 @@ end
 
 Unreloader.require('app/models') { |f| Sequel::Model.send(:camelize, File.basename(f).delete_suffix('.rb')) }
 
-if %w[development test].include?(ENV['RACK_ENV'])
+if %w[development test].include?(ENV['RACK_ENV']) && Settings.db.logger_stdout
   require 'logger'
   LOGGER = Logger.new($stdout)
   LOGGER.level = Logger::FATAL if ENV['RACK_ENV'] == 'test'

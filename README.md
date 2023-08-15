@@ -1,5 +1,6 @@
 # Ads Microservice
 Ads microservice from Ruby Microservices course. You can look at the same microservice written strictly in [Roda conventions](https://github.com/rubygitflow/ads_microservice_rc).
+(Use the "Switch branches" navigator here to open additional functionality.)
 
 ## Download this app from the repository
 It's set up so you can clone this repository and base your application on it:
@@ -25,6 +26,10 @@ $ git push -u origin master
 ```
 For more details, see the [github docs](https://docs.github.com/en/rest/repos/repos#create-a-repository-for-the-authenticated-user)
 
+## Environment setup
+```bash
+$ bundle install
+```
 
 ## Database Setup
 By default Sequel assumes a PostgreSQL database, with an application specific PostgreSQL database account.  You can create this via:
@@ -39,6 +44,23 @@ Create password for user account via:
 $ sudo su - postgres
 $ psql -c "alter user app_ads with password 'mypassword'"
 ```
+
+<details>
+<summary>Alternative way</summary>
+- make sure you have a postgres db by entering the command
+```bash
+psql -l
+```
+- log in to psql
+```bash
+sudo psql -U app_ads -d postgres
+```
+- input the command
+```bash
+postgres=> alter user app_ads with password 'mypassword';
+```
+</details>
+
 Configure the database connection defined in .env.rb for the ENV parameter `ENV['APP_ADS_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
 ```ruby
 ENV['APP_PORT'] = '3001'
@@ -55,9 +77,11 @@ else
 end
 ```
 According to the [Sequel documentation](https://github.com/jeremyevans/sequel#connecting-to-a-database-), you can also specify optional parameters `Settings.db` in `config/settings/*.yml` and `config/settings.yml` or `config/settings.local.yml`
-## Environment setup
+Finally, run the migration
 ```bash
-$ bundle install
+rake dev_up
+rake dev_seed
+rake test_up
 ```
 ## Run App
 You can either set up configuration into `config/initializers/config.rb`, `config/settings/*.yml` and `config/settings.yml` or `config/settings.local.yml` before running
@@ -90,20 +114,20 @@ $ date -u +%Y%m%d%H%M%S
 ```
 2. After adding additional migration files, you can run the migrations:
 ```bash
-$ rake dev_up  
-$ rake test_up 
-$ rake prod_up 
+$ rake dev_up
+$ rake test_up
+$ rake prod_up
 ```
 3. After modifying the migration file, you can drop down and then back up the migrations with a single command:
 ```bash
-$ rake dev_bounce  
-$ rake test_bounce 
+$ rake dev_bounce
+$ rake test_bounce
 ```
 4. Roll back database migration all the way down:
 ```bash
-$ rake dev_down  
-$ rake test_down 
-$ rake prod_down 
+$ rake dev_down
+$ rake test_down
+$ rake prod_down
 ```
 5. Feed the database with initial data:
 ```bash
