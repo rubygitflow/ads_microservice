@@ -1,10 +1,10 @@
-# Ads Microservice (asynchronous RabbitMQ)
+# Ads Microservice (synchronous RabbitMQ)
 Ads microservice from Ruby Microservices course. You can look at the same microservice written strictly in [Roda conventions](https://github.com/rubygitflow/ads_microservice_rc).
 
 ## Download this app from the repository
 It's set up so you can clone this repository and base your application on it:
 ```bash
-$ git clone git@github.com:rubygitflow/ads_microservice.git app_ads --single-branch --branch rabbitmq_asynchronous && cd app_ads && rm -r -f .git/
+$ git clone git@github.com:rubygitflow/ads_microservice.git app_ads --single-branch --branch rabbitmq_synchro && cd app_ads && rm -r -f .git/
 ```
 Initialize and configure a new Git repository (you need to have a [personal access token](https://github.com/settings/tokens)):
 ```bash
